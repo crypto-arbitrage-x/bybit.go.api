@@ -15,8 +15,8 @@ import (
 	"time"
 
 	"github.com/bitly/go-simplejson"
+	"github.com/crypto-arbitrage-x/bybit.go.api/handlers"
 	jsoniter "github.com/json-iterator/go"
-	"github.com/wuhewuhe/bybit.go.api/handlers"
 )
 
 var json = jsoniter.ConfigCompatibleWithStandardLibrary

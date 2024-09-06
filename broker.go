@@ -2,8 +2,9 @@ package bybit_connector
 
 import (
 	"context"
-	"github.com/wuhewuhe/bybit.go.api/handlers"
 	"net/http"
+
+	"github.com/crypto-arbitrage-x/bybit.go.api/handlers"
 )
 
 type BrokerServiceClient struct {

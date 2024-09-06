@@ -3,7 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
-	bybit "github.com/wuhewuhe/bybit.go.api"
+
+	bybit "github.com/crypto-arbitrage-x/bybit.go.api"
 )
 
 func main() {
