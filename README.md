@@ -2,6 +2,7 @@
 [![GO 1.21.0](https://img.shields.io/badge/Go-1.21.0-brightgreen.svg)](https://github.com/crypto-arbitrage-x/bybit-go-api)   [![Contributor Victor](https://img.shields.io/badge/contributor-Victor-blue.svg)](https://github.com/crypto-arbitrage-x/bybit-go-api)   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/crypto-arbitrage-x/bybit-go-api/blob/main/LICENSE)
 ## Table of Contents
 - [About](#about)
+- [Release](#release)
 - [Development](#development)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -18,14 +19,58 @@ Dive into a plethora of functionalities:
 - User and Upgrade Management
 - Public Websocket Streaming
 - Private Websocket Streaming
-- Lending Institution and Client
-- Broker Earning Data
+- Institution Loan
+- Broker
 
 bybit-go-api provides an official, robust, and high-performance go connector to Bybit's trading APIs.
 
 Initially conceptualized by go developer Victor, this module is now maintained by Bybit's in-house go experts.
 
 Your contributions are most welcome!
+
+## Release
+- refactor all the project
+- Market endpoints:
+  - add server response adapter
+- Position endpoints:
+  - SetPositionRiskLimit is deprecated;
+  - SetPositionTpslMode is deprecated.
+  - Add move position and history
+- trade
+  - Rename v5/execution/list to trade history
+- account
+  - Add transaction log to classical user
+  - Get DCP Info
+  - New endpoint /v5/account/smp-group
+- demo trading
+  - Add request coin endpoint
+- asset
+  - Add Get Convert Coin List
+  - Add Request a Quote
+  - Add Confirm a Quote
+  - Add Get Convert Status
+  - Add Get Convert history
+- user
+  - Query unlimited sub members
+- spot margin uta
+   - GetSpotMarginCoin is deprecated.
+   - GetSpotMarginBorrowCoin is deprecated.
+   - GetSpotMarginLoanAccountInfo is deprecated.
+   - GetSpotMarginBorrowOrders is deprecated.
+   - GetSpotMarginRepaymentOrders is deprecated.
+   - BorrowSpotMarginLoan is deprecated.
+   - RepaySpotMarginLoan is deprecated.
+   - Add spot margin uta interest history
+- ins
+   - GetC2cLendingAccountInfo is deprecated.
+   - GetC2cLendingOrders is deprecated.
+   - GetC2cLendingCoinInfo is deprecated.
+   - C2cCancelRedeemFunds is deprecated.
+   - C2cRedeemFunds is deprecated.
+   - C2cDepositFunds is deprecated.
+   - Add associate ins loan id
+- broker
+  - Add Get Sub Account Deposit Records
 
 ## Development
 bybit-go-api is under active development with the latest features and updates from Bybit's API implemented promptly. The module utilizes minimal external libraries to provide a lightweight and efficient experience. If you've made enhancements or fixed bugs, please submit a pull request.
@@ -50,7 +95,7 @@ Note: Replace placeholders (like YOUR_API_KEY, links, or other details) with the
 ```go
 client := bybit.NewBybitHttpClient("YOUR_API_KEY", "YOUR_API_SECRET", bybit.WithBaseURL(bybit.TESTNET))
 params := map[string]interface{}{"category": "linear", "symbol": "BTCUSDT", "side": "Buy", "positionIdx": 0, "orderType": "Limit", "qty": "0.001", "price": "10000", "timeInForce": "GTC"}
-orderResult, err := client.NewTradeService(params).PlaceOrder(context.Background())
+orderResult, err := client.NewUtaBybitServiceWithParams(params).PlaceOrder(context.Background())
 if err != nil {
 	fmt.Println(err)
 	return
@@ -102,7 +147,7 @@ params := map[string]interface{}{"category": "option",
 		},
 	},
 }
-orderResult, err := client.NewTradeService(params).PlaceBatchOrder(context.Background())
+orderResult, err := client.NewUtaBybitServiceWithParams(params).PlaceBatchOrder(context.Background())
 if err != nil {
 	fmt.Println(err)
 	return
@@ -114,7 +159,7 @@ fmt.Println(bybit.PrettyPrint(orderResult))
 ```go
 client := bybit.NewBybitHttpClient("YOUR_API_KEY", "YOUR_API_SECRET", bybit.WithBaseURL(bybit.TESTNET))
 params := map[string]interface{}{"category": "linear", "settleCoin": "USDT", "limit": 10}
-orderResult, err := client.NewPositionService(params).GetPositionList(context.Background())
+orderResult, err := client.NewUtaBybitServiceWithParams(params).GetPositionList(context.Background())
 if err != nil {
 	fmt.Println(err)
 	return
@@ -126,7 +171,7 @@ fmt.Println(bybit.PrettyPrint(orderResult))
 ```go
 client := bybit.NewBybitHttpClient("YOUR_API_KEY", "YOUR_API_SECRET", bybit.WithBaseURL(bybit.TESTNET))
 params := map[string]interface{}{"accountType": "UNIFIED", "category": "linear"}
-accountResult, err := client.NewAccountService(params).GetTransactionLog(context.Background())
+accountResult, err := client.NewUtaBybitServiceWithParams(params).GetTransactionLog(context.Background())
 if err != nil {
 	fmt.Println(err)
 	return
